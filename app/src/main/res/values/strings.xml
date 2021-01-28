@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">AndroidERestaurant</string>
+    <string name="TexteTitrePrincipal">Chez le Leu</string>
+    <string name="TexteSousTitrePrincipal">Bienvenue !</string>
+    <string name="TexteBoutonEntrees">Entrees</string>
+    <string name="TexteBoutonPlats">Plats</string>
+    <string name="TexteBoutonDesserts">Desserts</string>
+    <string name="TexteDescriptionImageLeuBG">Un loup.</string>
+</resources>
