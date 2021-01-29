@@ -1,6 +1,7 @@
 package fr.isen.duclaux.androiderestaurant
 
 import NameAdapter
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,13 +9,8 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import fr.isen.duclaux.androiderestaurant.databinding.ActivityListBinding
-//import kotlinx.android.synthetic.main.activity_main.*
-import fr.isen.duclaux.androiderestaurant.ListActivity
-
 
 private lateinit var binding: ActivityListBinding
-
-
 
 class ListActivity : AppCompatActivity() {
     private lateinit var linearLayoutManager: LinearLayoutManager
@@ -40,12 +36,15 @@ class ListActivity : AppCompatActivity() {
         namesAdapter.itemClickListener = { position, name ->
             Toast.makeText(this, "position: $position - name: $name", Toast.LENGTH_SHORT)
                 .show()
+            val intent = Intent(this, DetailsActivity::class.java)
+            startActivity(intent)
         }
     }
     override fun onDestroy() {
         super.onDestroy()
         Log.d("ListActivity","Destroyed.")
     }
+
     // This function just creates a list of names for us
     private fun getListOfNames(): MutableList<String> {
         val nameList = mutableListOf<String>()
