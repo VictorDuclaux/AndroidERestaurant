@@ -6,4 +6,13 @@
     <string name="TexteBoutonPlats">Plats</string>
     <string name="TexteBoutonDesserts">Desserts</string>
     <string name="TexteDescriptionImageLeuBG">Un loup.</string>
+    <string name="TexteTitreListe">Coucou du Leu.</string>
+
+    <string-array name="Liste">
+        <item>Pizza à la crème de marrons</item>
+        <item>Tartiflette au bleu</item>
+        <item>Et là je vais vous surprendre</item>
+        <item>La réponse D.</item>
+    </string-array>
+
 </resources>
