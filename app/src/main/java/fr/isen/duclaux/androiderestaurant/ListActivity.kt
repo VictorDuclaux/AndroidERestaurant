@@ -8,7 +8,11 @@ import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.Request
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import fr.isen.duclaux.androiderestaurant.databinding.ActivityListBinding
+import org.json.JSONObject
 
 private lateinit var binding: ActivityListBinding
 
@@ -39,11 +43,34 @@ class ListActivity : AppCompatActivity() {
             val intent = Intent(this, DetailsActivity::class.java)
             startActivity(intent)
         }
+
+        loadData()
+
     }
     override fun onDestroy() {
         super.onDestroy()
         Log.d("ListActivity","Destroyed.")
     }
+
+    fun loadData(){
+        val postUrl = "http://test.api.catering.bluecodegames.com/menu"
+        val requestQueue = Volley.newRequestQueue(this)
+
+        val postData = JSONObject()
+        postData.put( "id_shop", "1")
+
+        val jsonObjectRequest = JsonObjectRequest(
+            Request.Method.POST, postUrl, postData, {
+            Log.d("DetailsActivity", it.toString())
+        },
+            {
+                Log.e("DetailsActivity", "Erreur au niveau du JSON.")
+            })
+
+        requestQueue.add(jsonObjectRequest)
+    }
+
+
 
     // This function just creates a list of names for us
     private fun getListOfNames(): MutableList<String> {
