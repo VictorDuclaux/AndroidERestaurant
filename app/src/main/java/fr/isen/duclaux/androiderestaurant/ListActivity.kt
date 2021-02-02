@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.google.gson.Gson
 import fr.isen.duclaux.androiderestaurant.databinding.ActivityListBinding
 import org.json.JSONObject
 
@@ -24,17 +25,16 @@ class ListActivity : AppCompatActivity() {
         binding = ActivityListBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        val rclNames = findViewById<RecyclerView>(R.id.Recycler)
+        val rclcategory = findViewById<RecyclerView>(R.id.Recycler)
 
         // If size of the all items are equal and won't change for a better performance it's better to set setHasFixedSize to true
-        rclNames.setHasFixedSize(true)
+        rclcategory.setHasFixedSize(true)
 
-        // Creating an instance of our NameAdapter class and setting it to our RecyclerView
-        val nameList =  getListOfNames()
-        val namesAdapter = NameAdapter(nameList)
-        rclNames.adapter = namesAdapter
-        // Setting our RecyclerView's layout manager equal to LinearLayoutManager
-        rclNames.layoutManager = LinearLayoutManager(this)
+        val categList =  loadData()
+        Log.d("ListActivity", categList.toString())
+        val namesAdapter = NameAdapter(categList)
+        rclcategory.adapter = namesAdapter
+        rclcategory.layoutManager = LinearLayoutManager(this)
 
         // Initializing namesAdapter.itemClickListener
         namesAdapter.itemClickListener = { position, name ->
@@ -44,35 +44,42 @@ class ListActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        loadData()
-
     }
     override fun onDestroy() {
         super.onDestroy()
         Log.d("ListActivity","Destroyed.")
     }
 
-    fun loadData(){
+    private fun loadData(): List<String>{
         val postUrl = "http://test.api.catering.bluecodegames.com/menu"
         val requestQueue = Volley.newRequestQueue(this)
 
         val postData = JSONObject()
         postData.put( "id_shop", "1")
 
+        var categList: List<String> = listOf("Erreur","Erreur")
+
         val jsonObjectRequest = JsonObjectRequest(
             Request.Method.POST, postUrl, postData, {
-            Log.d("DetailsActivity", it.toString())
-        },
+                Log.d("ListActivity", categList.toString())
+                val gson: DataResult = Gson().fromJson(it.toString(), DataResult::class.java)
+                val categories: List<String> = gson.data.map {it.name}
+                categList = categories
+                Log.d("DetailsActivity", categList.toString())
+            },
             {
-                Log.e("DetailsActivity", "Erreur au niveau du JSON.")
+                Log.e("ListActivity", it.toString())
             })
 
         requestQueue.add(jsonObjectRequest)
+
+        return categList
     }
 
 
 
-    // This function just creates a list of names for us
+
+    /*//Inutile
     private fun getListOfNames(): MutableList<String> {
         val nameList = mutableListOf<String>()
         nameList.add("Ali")
@@ -97,5 +104,5 @@ class ListActivity : AppCompatActivity() {
         nameList.add("Kimberly")
 
         return nameList
-    }
+    }*/
 }
