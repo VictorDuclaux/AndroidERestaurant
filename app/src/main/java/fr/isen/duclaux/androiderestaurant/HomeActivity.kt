@@ -1,14 +1,13 @@
 package fr.isen.duclaux.androiderestaurant
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import fr.isen.duclaux.androiderestaurant.databinding.ActivityHomeBinding
 
 private lateinit var binding: ActivityHomeBinding
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
@@ -33,11 +32,12 @@ class HomeActivity : AppCompatActivity() {
             startActivity(intent)
 
         }
+        /*
         binding.BoutonRetard.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
 
-        }
+        }*/
 
     }
     override fun onDestroy() {

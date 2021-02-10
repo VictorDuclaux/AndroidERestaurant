@@ -2,7 +2,6 @@ package fr.isen.duclaux.androiderestaurant
 
 import NameAdapter
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,7 +10,6 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.GsonBuilder
 import fr.isen.duclaux.androiderestaurant.databinding.ActivityListBinding
-import fr.isen.duclaux.androiderestaurant.databinding.RecyclerviewItemRowBinding
 import org.json.JSONObject
 
 private lateinit var binding: ActivityListBinding
@@ -30,7 +28,7 @@ enum class ItemType {
     }
 }
 
-class ListActivity : AppCompatActivity() {
+class ListActivity : BaseActivity() {
     private lateinit var linearLayoutManager: LinearLayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +48,10 @@ class ListActivity : AppCompatActivity() {
     }
 
     private fun loadData(selectedItem: ItemType){
+
+        val loader = Loader()
+        loader.show(this, "récupération du menu")
+
         val postUrl = "http://test.api.catering.bluecodegames.com/menu"
         val requestQueue = Volley.newRequestQueue(this)
 
@@ -58,11 +60,13 @@ class ListActivity : AppCompatActivity() {
 
         val jsonObjectRequest = JsonObjectRequest(
             Request.Method.POST, postUrl, postData, { response ->
+                loader.hide(this)
                 val dataResult = GsonBuilder().create().fromJson(response.toString(), DataResult::class.java)
                 val items = dataResult.data.firstOrNull { it.name == ItemType.categoryTitle(selectedItem) }
                 loadList(items?.items)
             },
             {
+                loader.hide(this)
                 Log.e("ListActivity", it.toString())
             })
 

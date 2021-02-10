@@ -14,8 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidERestaurant"
         android:usesCleartextTraffic="true">
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".UserActivity" />
         <activity android:name=".DetailsActivity" />
+        <activity android:name=".PanierActivity" />
         <activity android:name=".ListActivity" />
         <activity android:name=".HomeActivity">
             <intent-filter>

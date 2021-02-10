@@ -7,6 +7,7 @@
     <string name="TexteBoutonDesserts">Desserts</string>
     <string name="TexteDescriptionImageLeuBG">Un loup.</string>
     <string name="TexteTitreListe">Coucou du Leu.</string>
+    <string name="hello_blank_fragment">Bla bla bla du texte</string>
     <string name="TextePlaceholder">Bla bla bla du texte.    Leu.</string>
     <string name="TexteTitreFormulaire">Veuillez remplir le formulaire :</string>
     <string name="TexteLabelNom">Nom :</string>
@@ -17,4 +18,15 @@
     <string name="TexteBoutonEnregistrement">ENREGISTER</string>
     <string name="TexteDescriptionImageMoins">Plus.</string>
     <string name="TexteDescriptionImagePlus">Moins.</string>
+    <string name="TextePanierValidation">Votre plat a bien été ajouté au panier.</string>
+    <string name="TextePanier">Panier</string>
+    <string name="TexteCommande">Passer commande.</string>
+    <string name="TexteQuantite">Quantité :</string>
+    <string name="registrationTitle">Création de votre compte</string>
+    <string name="firstname">Prénom</string>
+    <string name="lastname">Nom</string>
+    <string name="email">Email</string>
+    <string name="password">Mot de passe</string>
+    <string name="register">Créer votre compte.</string>
+    <string name="login">Se connecter</string>
 </resources>
