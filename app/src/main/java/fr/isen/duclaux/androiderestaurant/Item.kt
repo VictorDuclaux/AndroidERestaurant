@@ -11,7 +11,7 @@ data class Item (
     @SerializedName("images") val images: List<String>,
     @SerializedName("ingredients") val ingredients: List<ingredient>,
     val prices: List<Price>
-){
+): Serializable {
         fun getThumbnailUrl(): String? {
             return if(images.isNotEmpty() && images[0].isNotEmpty()) {
                 images[0]

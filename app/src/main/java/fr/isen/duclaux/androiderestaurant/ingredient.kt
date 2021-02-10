@@ -1,6 +1,7 @@
 package fr.isen.duclaux.androiderestaurant
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class ingredient (
     @SerializedName("id") val id: String,
@@ -9,4 +10,4 @@ data class ingredient (
     @SerializedName("create_date") val creationDate: String,
     @SerializedName("update_date") val updateDate: String,
     @SerializedName("id_pizza") val idPizza: String
-)
+): Serializable {}

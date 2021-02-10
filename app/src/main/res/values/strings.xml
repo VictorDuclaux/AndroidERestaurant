@@ -15,4 +15,6 @@
     <string name="TexteLabelEmail">Courriel :</string>
     <string name="TexteLabelMDP">Mot de passe :</string>
     <string name="TexteBoutonEnregistrement">ENREGISTER</string>
+    <string name="TexteDescriptionImageMoins">Plus.</string>
+    <string name="TexteDescriptionImagePlus">Moins.</string>
 </resources>
