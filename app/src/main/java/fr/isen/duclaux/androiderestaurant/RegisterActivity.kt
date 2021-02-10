@@ -1,6 +1,6 @@
 package fr.isen.duclaux.androiderestaurant
 
-import android.content.Intent
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,18 +9,18 @@ import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import fr.isen.duclaux.androiderestaurant.databinding.ActivityRegisterBinding
+import fr.isen.duclaux.androiderestaurant.databinding.ActivityRegisterBisBinding
 import org.json.JSONObject
 import org.w3c.dom.Text
 
-private lateinit var binding: ActivityRegisterBinding
+private lateinit var binding: ActivityRegisterBisBinding
 
 class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityRegisterBinding.inflate(layoutInflater)
+        binding = ActivityRegisterBisBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 

@@ -66,8 +66,10 @@
         android:layout_marginTop="164dp"
         android:backgroundTint="@color/red"
         android:text="@string/TextePlaceholder"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SousTitrePrincipal" />
+        app:layout_constraintTop_toBottomOf="@+id/SousTitrePrincipal"
+        tools:visibility="invisible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
