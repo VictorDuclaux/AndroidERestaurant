@@ -50,7 +50,7 @@ class NameAdapter(
                 item.prices.first().price.toString() + " €" // dish.prices.first().price + " €"
             Picasso.get()
                 .load(item.getThumbnailUrl())
-                .placeholder(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.leucuisto)
                 .into(imageView)
         }
     }

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">AndroidERestaurant</string>
-    <string name="TexteTitrePrincipal">Chez le Leu</string>
-    <string name="TexteSousTitrePrincipal">Bienvenue !</string>
+    <string name="TexteTitrePrincipal">Bienvenue chez Leu Cuisto !</string>
+    <string name="TexteSousTitrePrincipal">Vous avez une faim de loup ?</string>
     <string name="TexteBoutonEntrees">Entrees</string>
     <string name="TexteBoutonPlats">Plats</string>
     <string name="TexteBoutonDesserts">Desserts</string>
