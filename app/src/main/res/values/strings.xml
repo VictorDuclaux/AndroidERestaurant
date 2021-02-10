@@ -8,4 +8,11 @@
     <string name="TexteDescriptionImageLeuBG">Un loup.</string>
     <string name="TexteTitreListe">Coucou du Leu.</string>
     <string name="TextePlaceholder">Bla bla bla du texte.    Leu.</string>
+    <string name="TexteTitreFormulaire">Veuillez remplir le formulaire :</string>
+    <string name="TexteLabelNom">Nom :</string>
+    <string name="TexteLabelPrenom">Prénom :</string>
+    <string name="TexteLabelAdresse">Adresse :</string>
+    <string name="TexteLabelEmail">Courriel :</string>
+    <string name="TexteLabelMDP">Mot de passe :</string>
+    <string name="TexteBoutonEnregistrement">ENREGISTER</string>
 </resources>

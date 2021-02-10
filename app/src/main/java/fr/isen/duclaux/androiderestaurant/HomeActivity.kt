@@ -17,16 +17,24 @@ class HomeActivity : AppCompatActivity() {
 
         binding.BoutonEntrees.setOnClickListener {
             val intent = Intent(this, ListActivity::class.java)
+            intent.putExtra(CATEGORY_NAME, ItemType.ENTREE)
             startActivity(intent)
 
         }
         binding.BoutonPlats.setOnClickListener {
             val intent = Intent(this, ListActivity::class.java)
+            intent.putExtra(CATEGORY_NAME, ItemType.PLAT)
             startActivity(intent)
 
         }
         binding.BoutonDesserts.setOnClickListener {
             val intent = Intent(this, ListActivity::class.java)
+            intent.putExtra(CATEGORY_NAME, ItemType.DESSERT)
+            startActivity(intent)
+
+        }
+        binding.BoutonRetard.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
 
         }
@@ -35,6 +43,9 @@ class HomeActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         Log.d("HomeActivity","Destroyed.")
+    }
+    companion object{
+        const val CATEGORY_NAME = "CATEGORY_NAME"
     }
 
 /*

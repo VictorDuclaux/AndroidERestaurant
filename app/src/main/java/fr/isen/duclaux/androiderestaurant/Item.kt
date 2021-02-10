@@ -9,14 +9,14 @@ data class Item (
     @SerializedName("id_category") val idCateg: String,
     @SerializedName("categ_name_fr") val categNameFr: String,
     @SerializedName("images") val images: List<String>,
-    @SerializedName("ingredients") val ingredients: List<ingredient>
-):Serializable {
-
-    
-
-    /*fun getAllPictures() = if (images.isNotEmpty() && images.any { it.isNotEmpty() }){
-        images.filter { it.isNotEmpty() }
-    }else {
-        null
-    }*/
-}
+    @SerializedName("ingredients") val ingredients: List<ingredient>,
+    val prices: List<Price>
+){
+        fun getThumbnailUrl(): String? {
+            return if(images.isNotEmpty() && images[0].isNotEmpty()) {
+                images[0]
+            } else {
+                null
+            }
+        }
+    }

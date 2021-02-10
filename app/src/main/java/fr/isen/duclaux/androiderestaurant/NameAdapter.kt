@@ -1,76 +1,57 @@
 import android.view.LayoutInflater
-import android.view.View
+
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
+import fr.isen.duclaux.androiderestaurant.Item
 import fr.isen.duclaux.androiderestaurant.R
 
-class NameAdapter(private val names: List<String>) :
-    RecyclerView.Adapter<NameAdapter.NameViewHolder>() {
+import fr.isen.duclaux.androiderestaurant.databinding.RecyclerviewItemRowBinding
 
-    // Create a Unit function as variable
-    var itemClickListener: ((position: Int, name: String) -> Unit)? = null
+lateinit var binding: RecyclerviewItemRowBinding
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NameViewHolder {
-        // Inflating R.layout.name_item
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.recyclerview_item_row, parent, false)
-        return NameViewHolder(view)
+class NameAdapter(
+    private val entries: List<Item>,
+    private val entryClickListener: (Item) -> Unit
+) : RecyclerView.Adapter<NameAdapter.ItemViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
+        return ItemViewHolder(
+            RecyclerviewItemRowBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
-    override fun onBindViewHolder(holder: NameViewHolder, position: Int) {
-        // Getting element from names list at this position
-        val element = names[position]
-        // Updating the text of the txtName with this element
-        holder.txtName.text = element
-
-        // Adding an OnClickLister to the holder.itemView
-        holder.itemView.setOnClickListener {
-            // Invoking itemClickListener and passing it the position and name
-            itemClickListener?.invoke(position, element)
+    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+        val item = entries[position]
+        holder.layout.setOnClickListener {
+            entryClickListener.invoke(item)
         }
+        holder.bind(item)
     }
 
     override fun getItemCount(): Int {
-        return names.size
+        return entries.count()
     }
 
-    class NameViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val txtName = itemView.findViewById(R.id.txtName) as TextView
+    class ItemViewHolder(ItemsBinding: RecyclerviewItemRowBinding) :
+        RecyclerView.ViewHolder(ItemsBinding.root) {
+        val titleView: TextView = ItemsBinding.itemTitle
+        val priceView: TextView = ItemsBinding.itemPrice
+        val imageView: ImageView = ItemsBinding.itemImageView
+        val layout = ItemsBinding.root
+        fun bind(item: Item) {
+            titleView.text = item.nameItem
+            priceView.text =
+                item.prices.first().price.toString() + " €" // dish.prices.first().price + " €"
+            Picasso.get()
+                .load(item.getThumbnailUrl())
+                .placeholder(R.drawable.ic_launcher_background)
+                .into(imageView)
+        }
     }
 }
-
-/*class NameAdapter(private val names: List<String>) :
-    RecyclerView.Adapter<NameAdapter.NameViewHolder>() {
-
-    // Create a Unit function as variable
-    var itemClickListener: ((position: Int, name: String) -> Unit)? = null
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NameViewHolder {
-        // Inflating R.layout.name_item
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.recyclerview_item_row, parent, false)
-        return NameViewHolder(view)
-    }
-
-    override fun onBindViewHolder(holder: NameViewHolder, position: Int) {
-        // Getting element from names list at this position
-        val element = names[position]
-        // Updating the text of the txtName with this element
-        holder.txtName.text = element
-
-        // Adding an OnClickLister to the holder.itemView
-        holder.itemView.setOnClickListener {
-            // Invoking itemClickListener and passing it the position and name
-            itemClickListener?.invoke(position, element)
-        }
-    }
-
-    override fun getItemCount(): Int {
-        return names.size
-    }
-
-    class NameViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val txtName = itemView.findViewById(R.id.txtName) as TextView
-    }
-}*/

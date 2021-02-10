@@ -5,17 +5,32 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import fr.isen.duclaux.androiderestaurant.ItemType.Companion.categoryTitle
 import fr.isen.duclaux.androiderestaurant.databinding.ActivityListBinding
+import fr.isen.duclaux.androiderestaurant.databinding.RecyclerviewItemRowBinding
 import org.json.JSONObject
 
 private lateinit var binding: ActivityListBinding
+private lateinit var binding2: RecyclerviewItemRowBinding
+
+enum class ItemType {
+    ENTREE, PLAT, DESSERT;
+    companion object {
+        fun categoryTitle(item: ItemType?) : String {
+            return when(item) {
+                ENTREE -> "Entrées"
+                PLAT -> "Plats"
+                DESSERT -> "Desserts"
+                else -> ""
+            }
+        }
+    }
+}
 
 class ListActivity : AppCompatActivity() {
     private lateinit var linearLayoutManager: LinearLayoutManager
@@ -23,25 +38,21 @@ class ListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityListBinding.inflate(layoutInflater)
+        binding2 = RecyclerviewItemRowBinding.inflate(layoutInflater)
         val view = binding.root
+        val view2 = binding2.root
         setContentView(view)
-        val rclcategory = findViewById<RecyclerView>(R.id.Recycler)
+        //setContentView(view2)
 
-        // If size of the all items are equal and won't change for a better performance it's better to set setHasFixedSize to true
-        rclcategory.setHasFixedSize(true)
+        val selectedItem = intent.getSerializableExtra(HomeActivity.CATEGORY_NAME) as ItemType
 
-        val categList =  loadData()
-        Log.d("ListActivity", categList.toString())
-        val namesAdapter = NameAdapter(categList)
-        rclcategory.adapter = namesAdapter
-        rclcategory.layoutManager = LinearLayoutManager(this)
+        loadData(selectedItem)
 
-        // Initializing namesAdapter.itemClickListener
-        namesAdapter.itemClickListener = { position, name ->
-            Toast.makeText(this, "position: $position - name: $name", Toast.LENGTH_SHORT)
-                .show()
-            val intent = Intent(this, DetailsActivity::class.java)
-            startActivity(intent)
+        //Pas utile.
+        binding2.Carte.setOnClickListener {
+            val intent2 = Intent(this, DetailsActivity::class.java)
+            startActivity(intent2)
+
         }
 
     }
@@ -50,59 +61,35 @@ class ListActivity : AppCompatActivity() {
         Log.d("ListActivity","Destroyed.")
     }
 
-    private fun loadData(): List<String>{
+    private fun loadData(selectedItem: ItemType){
         val postUrl = "http://test.api.catering.bluecodegames.com/menu"
         val requestQueue = Volley.newRequestQueue(this)
 
         val postData = JSONObject()
         postData.put( "id_shop", "1")
 
-        var categList: List<String> = listOf("Erreur","Erreur")
-
         val jsonObjectRequest = JsonObjectRequest(
-            Request.Method.POST, postUrl, postData, {
-                Log.d("ListActivity", categList.toString())
-                val gson: DataResult = Gson().fromJson(it.toString(), DataResult::class.java)
-                val categories: List<String> = gson.data.map {it.name}
-                categList = categories
-                Log.d("DetailsActivity", categList.toString())
+            Request.Method.POST, postUrl, postData, { response ->
+                val dataResult = GsonBuilder().create().fromJson(response.toString(), DataResult::class.java)
+                val items = dataResult.data.firstOrNull { it.name == ItemType.categoryTitle(selectedItem) }
+                loadList(items?.items)
             },
             {
                 Log.e("ListActivity", it.toString())
             })
 
         requestQueue.add(jsonObjectRequest)
-
-        return categList
     }
 
-
-
-
-    /*//Inutile
-    private fun getListOfNames(): MutableList<String> {
-        val nameList = mutableListOf<String>()
-        nameList.add("Ali")
-        nameList.add("Sophia")
-        nameList.add("Isabella")
-        nameList.add("Mason")
-        nameList.add("Jacob")
-        nameList.add("William")
-        nameList.add("Olivia")
-        nameList.add("Jayden")
-        nameList.add("Chloe")
-        nameList.add("Ella")
-        nameList.add("Anthony")
-        nameList.add("Joshua")
-        nameList.add("James")
-        nameList.add("Grace")
-        nameList.add("Samantha")
-        nameList.add("Nicholas")
-        nameList.add("Brianna")
-        nameList.add("Justin")
-        nameList.add("Lauren")
-        nameList.add("Kimberly")
-
-        return nameList
-    }*/
+    private fun loadList(items: List<Item>?) {
+        items?.let {
+            val adapter = NameAdapter(it) { items ->
+                Log.d("dish", "selected dish ${items.nameItem}")
+                val intent2 = Intent(this, DetailsActivity::class.java)
+                startActivity(intent2)
+            }
+            binding.Recycler.adapter = adapter
+            binding.Recycler.layoutManager = LinearLayoutManager(this)
+        }
+    }
 }
